@@ -10,7 +10,7 @@ Search and watch Youtube videos from terminal
 ```bash
     pip install pytube
 ```
-- Currently this programs show first 8 result in order to speed run time
+- Currently this programs shows first 8 results in order to speed run time
 # Usage
 From you terminal :
 ```bash
