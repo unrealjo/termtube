@@ -1,4 +1,4 @@
-from tools import Search  # my implementation instaed of pytube's
+from tools import Search  # My implementation instaed of pytube's one
 from pytube import YouTube
 import sys
 import os
@@ -18,11 +18,6 @@ else:
         count += 1
     patterns = patterns.replace(" ", "+", count)  # transform space to "+"
     videos = Search(patterns).get_link()
-    file = open("/tmp/urls.tmp", 'w')
-    links = ""
     for video in videos:
-        title = YouTube(video).title
-        file.write(f"{video} * {title}\n")
-
+        print(f"{video} * {YouTube(video).title}")
     file.close()
-    os.system("mpv $(cat /tmp/urls.tmp | fzf)")

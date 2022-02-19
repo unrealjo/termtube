@@ -18,6 +18,6 @@ class Search():
         video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
         html.close()
         urls = []
-        for i in range(8):
+        for i in range(5):
             urls.append(F"https://www.youtube.com/watch?v={video_ids[i]}")
         return urls
