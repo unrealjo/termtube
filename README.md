@@ -16,6 +16,10 @@ Run it :
 ```bash
     ./termtube [search_query]
 ```
+Or simpely
+```bash
+    bash termtube [search_query]
+```
 # Todo
 - [ ] Support for Windows
 - [x] Optimization
