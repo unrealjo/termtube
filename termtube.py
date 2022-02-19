@@ -1,25 +1,28 @@
-import urllib.request
-import re
+from tools import Search  # my implementation instaed of pytube's
 from pytube import YouTube
 import sys
-search = ""
-count = -1
-"""
-count variablr is used to count number of spaces
-in our search string
-I set it to -1 because the last iteration
- in the loop adds a space at the end of search string
-and I don't want to count it
-"""
+import os
 sys.argv.pop(0)  # removing file name from list of args
-for item in sys.argv:
-    search += item + " "
-    count += 1
-search = search.replace(" ", "+", count)  # transform space to "+"
-html = urllib.request.urlopen(
-    F"https://www.youtube.com/results?search_query={search}")
-video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
-html.close()
-for i in range(5):
-    url = F"https://www.youtube.com/watch?v={video_ids[i]}"
-    print(url, "*", YouTube(url).title)
+if len(sys.argv) == 0:
+    print("No query query entered !")
+else:
+    patterns = ""
+    count = -1
+    """
+    count variable is used to count number of spaces
+    in our query string
+    I set it to -1 to not count the last space
+    """
+    for item in sys.argv:
+        patterns += item + " "  # separate argumment
+        count += 1
+    patterns = patterns.replace(" ", "+", count)  # transform space to "+"
+    videos = Search(patterns).get_link()
+    file = open("/tmp/urls.tmp", 'w')
+    links = ""
+    for video in videos:
+        title = YouTube(video).title
+        file.write(f"{video} * {title}\n")
+
+    file.close()
+    os.system("mpv $(cat /tmp/urls.tmp | fzf)")
