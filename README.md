@@ -19,5 +19,5 @@ From you terminal :
 then you can chose a video from from a fzf menu .
 - this programm is tested under linux/unix machine
 # Todo
-- [] Support for Windows
-- [] Optimization
+- [ ] Support for Windows
+- [ ] Optimization
