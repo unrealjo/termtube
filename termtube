@@ -1,0 +1,10 @@
+#!/bin/bash
+if [[ ! -n $1 ]];
+then 
+    echo "No parameter passed."
+else
+    id=$( python ./termtube.py $@ | fzf |awk '{print $1}')
+    video="https://youtube.com/watch?v=$id"
+    echo "Playing video ..."
+    mpv $video
+fi
