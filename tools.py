@@ -1,5 +1,5 @@
-import urllib.request
-import re
+import requests
+import json
 """
 I implemnted my own search class
 bescause I found search class from pytube somehow slow
@@ -12,12 +12,12 @@ class Search():
     def __init__(self, search_query):
         self.query = search_query
 
-    def get_link(self):
-        html = urllib.request.urlopen(
-            F"https://www.youtube.com/results?search_query={self.query}")
-        video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
-        html.close()
-        urls = []
-        for i in range(5):
-            urls.append(F"https://www.youtube.com/watch?v={video_ids[i]}")
-        return urls
+    def get_info(self):
+        infos = []
+        r = requests.get(F'https://vid.puffyan.us/api/v1/search?q={self.query}')
+        data = json.loads(r.content)
+        lendata = len(data)
+        for i in range(lendata):
+            infos.append(data[i]['videoId'])
+            infos.append(data[i]['title'])
+        return infos, lendata
