@@ -16,7 +16,7 @@ class Search():
         infos = []
         r = requests.get(F'https://vid.puffyan.us/api/v1/search?q={self.query}')
         data = json.loads(r.content)
-        lendata = len(data)
+        lendata = len(data) # Get number of results
         for i in range(lendata):
             infos.append(data[i]['videoId'])
             infos.append(data[i]['title'])

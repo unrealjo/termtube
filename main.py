@@ -1,18 +1,44 @@
 from tools import Search # My implementation instaed of pytube's one
-import sys
+import getopt, sys
+import subprocess
 
-sys.argv.pop(0)  # removing file name from list of args
-patterns = ""
-count = -1
-"""
-count variable is used to count number of spaces
-in our query string
-I set it to -1 to not count the last space
-"""
-for item in sys.argv:
-    patterns += item + " "  # separate argumment
-    count += 1
-patterns = patterns.replace(" ", "+", count)  # transform space to "+"
-vidIds, num = Search(patterns).get_info()   
-for i in range(0 ,num*2 ,2):
-    print(F"{vidIds[i]} [{vidIds[i+1]}]")
+opts, args = getopt.getopt(sys.argv[1:],"hdfr")
+query= '+'.join(args) # join args with + as separator
+pips = ('fzf', 'dmenu', 'rofi -dmenu') # List of programs to pip results to
+if len(opts) > 0 : # means if the option is specitied
+    opt = opts[0][0]
+else:
+    opt = ''
+def yt(search_query, pip2):
+    vidIds, num = Search(search_query).get_info()   
+
+    # Writing results to temporary file
+    file = open('/tmp/results', 'w') 
+    for i in range(0 ,num*2 ,2):
+        file.write(f"{vidIds[i]} [{vidIds[i+1]}]\n")
+    file.close()
+
+    # Getting chose from user
+    runer = subprocess.Popen(f"cat /tmp/results | {pip2}", shell=True, stdout=subprocess.PIPE)
+    result = str(runer.stdout.read())
+    return "https://youtube.com/watch?v=" + result[2:13] 
+
+video = ''
+if opt == '-h':
+    print("""termtube [options] [search_query]
+    -h : Help
+    -f to get result in fzf
+    -d to get result in dmenu
+    -r to get result in rofi
+    """)
+elif opt == '-f':
+    video = yt(query,pips[0])
+    subprocess.run(['/bin/mpv', video])
+elif opt == '-d':
+    video = yt(query,pips[1])
+    subprocess.run(['/bin/mpv', video])
+elif opt == '-r':
+    video = yt(query,pips[2])
+    subprocess.run(['/bin/mpv', video])
+elif opt == '':
+    print("You need to specity an option")
