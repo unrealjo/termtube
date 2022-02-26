@@ -6,11 +6,11 @@ Search and Watch Youtube videos from terminal
 - [python3.x](https://www.python.org/downloads/)
 
 # Usage
-##From you terminal :
+## From you terminal :
 
 Simply run :
 ```bash
-    python3 main.y [search_query]
+    python3 main.y [option][search_query]
 ```
 # Todo
 - [ ] Support for Windows
