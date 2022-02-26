@@ -8,17 +8,9 @@ Search and Watch Youtube videos from terminal
 # Usage
 ##From you terminal :
 
-Make the file executable :
+Simply run :
 ```bash
-    sudo chmod +x termtube
-```
-Run it :
-```bash
-    ./termtube [search_query]
-```
-Or simpely
-```bash
-    bash termtube [search_query]
+    python3 main.y [search_query]
 ```
 # Todo
 - [ ] Support for Windows
