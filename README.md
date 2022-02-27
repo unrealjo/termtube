@@ -13,6 +13,6 @@ Simply run :
     python3 main.y [option][search_query]
 ```
 # Todo
-- [ ] Support for Windows
+- [ ] Get videos from channel or playlist
 - [x] Optimization
 - [x] Script to play videos
