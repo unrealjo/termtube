@@ -13,11 +13,11 @@ class Search():
         self.query = search_query
 
     def get_info(self):
-        infos = []
+        vId = []
+        titles = []
         r = requests.get(F'https://vid.puffyan.us/api/v1/search?q={self.query}')
         data = json.loads(r.content)
-        lendata = len(data) # Get number of results
-        for i in range(lendata):
-            infos.append(data[i]['videoId'])
-            infos.append(data[i]['title'])
-        return infos, lendata
+        for i in range(len(data)):
+            vId.append(data[i]['videoId'])
+            titles.append(data[i]['title'])
+        return vId, titles
